@@ -247,4 +247,4 @@ KnoxStudio gives you a complete video studio on your Mac — the recorder, the e
 
 **Capture it. Shape it. Bring it to life with AI. Then share it with the world.**
 
-*Welcome to KnoxStudio.*
+*Welcome to [KnoxStudio](https://knoxstudio.ai).*
