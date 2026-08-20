@@ -1,5 +1,105 @@
 # Changelog
 
+## [1.3.7]
+
+### AI Agent chat — reliability & streaming
+
+- Fix duplicated and overlapping agent replies after video generation — each turn now shows one assistant message that updates in place
+- Remove the separate “Thinking…” placeholder bubble; responses stream live into a single message
+- System updates (video placed on timeline, generation failed or cancelled, sequence complete) appear as compact notices instead of extra agent paragraphs
+- **Stop** while the agent is working: the Send button becomes Stop, Esc cancels, and partial replies are kept
+- Prevent sending a second message while a reply is still in progress
+- Starting a new chat or switching conversations no longer lets a late reply appear in the wrong thread
+- Chat history no longer shows the same reply twice after a video job
+
+### AI Agent chat — reading experience
+
+- Markdown wraps properly — long URLs, job IDs, hashes, and mixed Chinese/English text no longer stack one character per line
+- Bulleted and numbered lists read cleanly with proper indentation
+- Code blocks show the language, include a **Copy** button, and scroll horizontally when needed
+- Tables scroll horizontally; cell text wraps by word, not by character
+- Long links ellipsize instead of breaking the layout
+- Inline math (`$…$`, `$$…$$`) renders in the message; LaTeX and Mermaid blocks appear as copyable code
+- Message text remains selectable for copy-paste
+
+### AI Agent chat — streaming feel
+
+- Smoother token streaming with less flicker and layout jumping while the agent is typing
+- Blinking cursor at the end of the in-flight reply instead of a separate “Streaming…” bubble
+- Status shown inside the message: Reasoning, calling a tool, generating video, writing, and similar states
+- Scroll stays put when you read older messages; a **New messages** button appears when new content arrives below
+- Loading dots inside the message when the first tokens are slow to arrive
+- Stream errors show a clear message with **Retry** instead of raw error text in the reply
+
+### AI Agent chat — reasoning
+
+- One collapsible **Reasoning** section per message — no duplicate thinking boxes
+- While reasoning: section expands automatically; when done, collapses with a summary like “Thought for 4s”
+- Completed messages show reasoning collapsed by default; expand/collapse is remembered per message
+- **Copy reasoning** available from the message actions menu; default copy copies the answer only
+- Reasoning effort setting (Off / Low / Medium / High) in AI Agent configuration; hidden for models that do not support it
+
+### AI Agent chat — messages & actions
+
+- Cleaner message layout: less repeated chrome, more room for content; refreshed light and dark styling
+- Hover actions on each message: **Copy**, **Retry** (agent), **Edit** (user), and **More** (copy as Markdown, delete, quote, and more)
+- **Retry** resends your last prompt without duplicating your message
+- **Edit** lets you change a past prompt and resubmit; later messages in the thread are removed (ChatGPT-style)
+- Timestamps on hover or when messages are far apart; **Today** and **Yesterday** date separators
+- Chat history uses the same layout and timestamp rules as live chat — no timestamp on every line
+- Related notices and tool cards group visually; stopped or failed turns show a clear banner
+
+### AI Agent chat — composer
+
+- Composer grows as you type (taller draft area for long prompts)
+- Choose **Enter to send** or **Cmd+Enter to send** in preferences; Shift+Enter always adds a new line
+- Drafts are saved per conversation and restored when you return
+- Drag and drop files onto the panel, or paste an image from the clipboard; preview chips with remove
+- Character count for long prompts; warning when many timeline stills may exceed context limits
+- Quick-start prompts (generate video, edit last clip, explain selection, write a shot list, and more) insert into the composer without sending immediately
+- Composer stays above floating buttons and mention popups; focus returns after send or stop
+
+### AI Agent chat — video, audio & tools
+
+- Video generation shown as one card per job: prompt, progress, elapsed time, and errors in a single place
+- When complete: **Play**, **Reveal in timeline**, **Copy prompt**, and **Retry** on the card; timeline placement shown on the card, not as a second reply
+- Audio messages show duration and playback
+- Image and video previews in chat; click an image for a lightbox; scrub video thumbnails on hover
+- Plan, confirm, and question cards improved — live step updates, approval-style confirms, keyboard 1–9 for quick answers
+- Compact tool-call rows in the thread (expand for details), similar to Cursor-style tool cards
+
+### AI Agent chat — history & search
+
+- History view matches live chat — same bubbles, actions, and styling
+- Resuming a conversation restores generation card state and reasoning layout
+- Search within the open conversation (highlight matches in the thread)
+- Export a conversation as Markdown or plain text
+- Delete a single message or an entire turn (user + agent) with confirmation
+- Conversation titles no longer pick up “Thinking…” from old sessions
+
+### AI Agent chat — performance & polish
+
+- Long conversations scroll smoothly with a virtualized message list
+- Suggested follow-up chips after a completed reply (e.g. make it shorter, generate a video, continue)
+- **Quote** inserts a blockquote into the composer from any message
+- Open a message in a larger overlay for wide tables or long code
+- Header shows the active model and Auto vs Confirm mode; optional token usage when the API provides it
+- Network and quota errors as clear notices with **Retry** and a link to AI settings
+- **Jump to bottom** button with unread count when you have scrolled up
+- Select multiple messages (checkbox or ⌘⇧A) to copy, export, or delete in bulk
+- Pin an important message or generation card to the top of the panel
+- Accessibility labels on icon buttons; reduced motion disables blinking cursors and loading animations
+- New chat UI strings in English and Chinese
+
+## [1.3.6]
+
+- Add StoryBoard
+- Bundle FFmpeg/FFprobe 9.0
+- Mentions now sit in the sentence
+- Image & Vision modality with default KnoxStudio provider
+- Remove unused Collapse all icon/button
+- Add KnoxStudio video generation models
+
 ## [1.3.5]
 
 - Upgrade egui stack to 0.36.1 (`eframe`, `egui`, `egui_extras`) and adapt to the `DroppedFile.path()` API for project and timeline file drops
