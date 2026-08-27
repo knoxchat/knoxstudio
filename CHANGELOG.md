@@ -1,5 +1,55 @@
 # Changelog
 
+## [1.3.8]
+
+- Add realtime endpoint
+- Add Knox API for voice models
+
+### Voice Director — realtime speech to speech
+
+- Talk with the Voice Director over KnoxChat Realtime — speech in, speech out, with studio tools for video, image, and audio
+- Assistant speech stays continuous: queued audio is no longer dropped when the model streams faster than playback, so replies do not skip or chop mid-sentence
+- Gaps in the network stream fade out instead of clicking; playback waits for a short buffer before starting so the first words are not cut off
+- Microphone audio is sent as it is captured, not once per UI frame — turn-taking stays smooth while the timeline or preview is busy
+- Laptop speaker echo no longer cancels the Director mid-word; talking over a reply still interrupts after a short stretch of real speech
+- Desktop mics (Yeti + MacBook speakers) no longer cut a reply on a 60 ms burst of speaker leak — interrupt needs louder, longer speech than the current playback
+- Network jitter no longer punches a silence hole in the middle of a sentence; playback stays live through gaps instead of pausing 400–480 ms to re-buffer
+- After a reply you can interrupt or ask a follow-up in the same session; the mic opens once the model finishes that spoken turn
+- Your words appear in the chat as you speak (live captions), then as a user message when the turn finishes
+- Composer shows Listening / Thinking / Speaking, a live mic-level ring on the voice button, and a pulse while connecting
+- Header title switches to **Voice Director** for the whole session, including while connecting; click the mic to start or stop
+
+### AI Agent chat — typesetting & density
+
+- Switching dark and light no longer shreds agent reply text — markdown no longer reuses glyph meshes after the font atlas is rebuilt
+- Contractions from voice and LLM replies no longer render as `I' m` / `I' ll` — typographic apostrophes and quotes typeset with Latin metrics
+- Agent replies are document-style (no heavy bubble); user messages shrink-wrap and sit on the right with a tight tail corner
+- Timestamp, token usage, and Copy / Retry / More share one compact meta row instead of a token line plus an empty action bar
+- Tighter thread, header, notices, Scene/Roles chips, and empty composer so more of the conversation stays on screen
+- Markdown headings use size hierarchy instead of rainbow colors; body line-height is 1.35 for sidebar density
+
+### Fonts Issues
+
+- Blank UI text on some Macs (icons visible, every label a gray bar): macOS 15+ PingFang UI stores outlines in a private `hvgl` table that egui cannot rasterize. The app no longer uses that face for UI text
+- Bundle Noto Sans SC (SIL OFL) after the Latin UI face, so English punctuation keeps Latin metrics and Simplified Chinese still draws when PingFang is missing, on-demand, or `hvgl`-only
+- System CJK fonts (PingFang SC, Hiragino Sans GB, Heiti SC) are extra coverage only after a raster probe — cmap-only faces cannot steal Latin glyphs
+- Fix startup crash on some Macs — `Invalid index 180 for font collection` when loading PingFang SC no longer aborts the app
+- CJK UI fonts resolve dynamically from wherever macOS stores them, instead of hardcoded paths and TTC face indices
+- Annotation export uses the bundled Noto Sans SC font so exported Chinese text is never blank
+- Release and DMG builds run a font preflight during `--smoke-test` so a bad collection index or undrawable bundled face cannot ship in the packaged app
+
+### Media Library — Source Control sidebar
+
+- Fix Source Control (git) tab clipping in the Media Library sidebar — commit box, tabs, and status text no longer get cut off at narrow widths
+- File tree and Source Control remember separate sidebar widths; switching views restores each one instead of sharing a single narrow column
+- Opening Source Control expands to a comfortable width automatically; your resized width is persisted per view
+- Git sidebar layout is content-driven: tab labels, commit hint, branch controls, and header chrome are measured at runtime instead of using fixed pixel breakpoints
+- View tabs share the available width equally; when space is tight they collapse to icons with tooltips
+- Branch name field and **Create branch** stack or sit side by side based on measured fit; the input fills remaining space when inline
+- Long changed-file names ellipsize instead of overflowing the row; group actions collapse to icons when the header is tight
+- Branch name in the sidebar header truncates with ellipsis so it does not crowd the action icons
+- Media Library max width scales with window size (~45% of content width) rather than a hard cap
+
 ## [1.3.7]
 
 ### AI Agent chat — reliability & streaming

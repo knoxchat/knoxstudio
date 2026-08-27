@@ -2,7 +2,7 @@
 
 Thank you for helping build KnoxStudio. This is a native **macOS-only** Rust app (egui / eframe + Swift FFI). Contributions are welcome as long as they keep the tree compiling cleanly and the quality gate green.
 
-**A commit is not ready until every required Cargo check passes.** That is not optional. The same commands that maintainers run locally are the ones this document specifies, and they were confirmed on this repository with Rust **1.97.1**.
+**A commit is not ready until every required Cargo check passes.** That is not optional. The same commands that maintainers run locally are the ones this document specifies, and they were confirmed on this repository with Rust **1.98.0**.
 
 | Gate | Command | Confirmed |
 |------|---------|-----------|
@@ -57,7 +57,7 @@ Good first areas:
 - Timeline, project model, export, and i18n unit tests
 - Clippy / rustc warning cleanup (warnings are errors)
 - Accessibility, keyboard shortcuts, and translation completeness
-- Docs that match the current tree (`src/i18n/`, Rust 1.97.1, Makefile targets)
+- Docs that match the current tree (`src/i18n/`, Rust 1.98.0, Makefile targets)
 
 Talk to maintainers first for:
 
@@ -77,7 +77,7 @@ KnoxStudio does not build on Linux or Windows. You need a Mac.
 | **macOS** | 13.0 Ventura or later (`MACOSX_DEPLOYMENT_TARGET=13.0`) |
 | **Hardware** | Apple Silicon or Intel |
 | **Xcode CLT** | Command Line Tools (or full Xcode). `swiftc` must be on `PATH` — `build.rs` compiles `src/native/*.swift` into `libnative_swift.a` |
-| **Rust** | **1.97.1** exactly as pinned in `rust-toolchain.toml` and `Cargo.toml` `rust-version`. Edition **2024** |
+| **Rust** | **1.98.0** exactly as pinned in `rust-toolchain.toml` and `Cargo.toml` `rust-version`. Edition **2024** |
 | **Components** | `rustfmt`, `clippy` (installed by rustup from the toolchain file) |
 | **FFmpeg / FFprobe** | Bundled via `make ffmpeg` / `setup_ffmpeg.sh` into `tools/` (gitignored). Integration tests use `tools/ffmpeg` when present, otherwise `PATH` |
 | **Git** | For branches, hooks, and PRs |
@@ -93,15 +93,15 @@ Optional but useful:
 Confirm the toolchain after clone:
 
 ```bash
-rustc --version    # rustc 1.97.1 (...)
-cargo --version    # cargo 1.97.1 (...)
+rustc --version    # rustc 1.98.0 (...)
+cargo --version    # cargo 1.98.0 (...)
 rustfmt --version
 cargo clippy --version
 xcode-select -p
 swiftc --version
 ```
 
-If `rustc` is not 1.97.1, rustup will install it from `rust-toolchain.toml` the next time you run `cargo` in this directory:
+If `rustc` is not 1.98.0, rustup will install it from `rust-toolchain.toml` the next time you run `cargo` in this directory:
 
 ```bash
 rustup show
@@ -155,8 +155,8 @@ Screen Recording, Camera, and Microphone permissions are requested when you use 
 
 ```
 knox-studio/
-├── Cargo.toml                 # package knoxstudio 1.3.7, edition 2024, rust-version 1.97.1
-├── rust-toolchain.toml        # pins rustc 1.97.1 + rustfmt + clippy
+├── Cargo.toml                 # package knoxstudio 1.3.8, edition 2024, rust-version 1.98.0
+├── rust-toolchain.toml        # pins rustc 1.98.0 + rustfmt + clippy
 ├── Makefile                   # build, test, lint, bundle, release
 ├── build.rs                   # Swift FFI compile, macOS 13 deployment target
 ├── .cargo/config.toml         # MACOSX_DEPLOYMENT_TARGET=13.0
@@ -416,7 +416,7 @@ More recipes: [docs/test.md](docs/test.md).
 
 ### Rust
 
-- Edition **2024**, rustc **1.97.1**. Do not use nightly-only features.
+- Edition **2024**, rustc **1.98.0**. Do not use nightly-only features.
 - rustfmt is the formatter. No parallel style guide.
 - Clippy warnings are errors (`-D warnings`).
 - Public items that are part of a non-obvious API get `///` docs.
@@ -600,7 +600,7 @@ Authors should expect requests to add tests for timeline math, export filters, a
 
 ```bash
 cd /path/to/knox-studio
-rustup show          # should select 1.97.1 from rust-toolchain.toml
+rustup show          # should select 1.98.0 from rust-toolchain.toml
 rustup component add rustfmt clippy
 ```
 
