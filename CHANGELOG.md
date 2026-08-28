@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.3.9]
+
+### Voice Director — studio modes by speech
+
+- Speak to open Director, Writer, Editor, Storyboard, or Character Roles — the Voice Director switches modes itself, so you do not need the composer text field or mode icons while the mic is on
+- Composer icons and voice share one studio-mode path, so clicks and speech stay in sync
+- After a mode switch, the Voice Director keeps its studio tools instead of falling back to web search only
+- Switching modes while a reply is still speaking no longer shows "Conversation already has an active response" or blocks the next turn
+
+### Voice Director — drive specialists by voice
+
+- Ask for a shot list, start or cancel the Director pipeline, or reset and analyze a new brief
+- Send spoken instructions to the Screenplay Writer and Timeline Clip Editor; their replies stream in the specialist panel instead of duplicating in the voice transcript
+- Start a Storyboard from a spoken plot, pick a style, and continue past review checkpoints
+- Activate, create, or list character roles ("use Pablo", "turn off Ashley") so generations pick up those references
+- Play, pause, stop, skip start/end, rewind, fast-forward, loop, or jump the playhead by speech
+
+### Voice Director — transport and timeline chrome
+
+- Speak to toggle the Media Library, Agent or Inspector, dark/light theme, and English/Chinese — the same buttons as the transport bar, without clicking
+- Undo, redo, new/save/open project, export, add media, and relink missing files by voice
+- Start or stop screen recording, and open Preferences (including the recording-setup Devices tab)
+- Set timeline edit mode (Normal / Ripple / Insert), Select or Blade, Snap, import at playhead vs start, zoom, the performance overlay, and Image Gen merge of selected clips
+
+### Voice Director — clip context menu
+
+- Speak the timeline clip right-click actions: split, trim front/end to the playhead, rotate 90°, copy/cut/paste, duplicate, move to playhead, select all on track, detach audio, freeze frame, and cross dissolve
+- Reveal in Finder, extract the playhead / first / last / key frames, mute, lock, add the clip to agent context, regenerate, generate a variation, extend, or delete — targeting the selected clip, the clip under the playhead, or a spoken clip id
+
+### Voice Director — generation without the keyboard
+
+- Generate video, image, and audio by speech; video can attach a first frame and reference images when those files exist
+- Voice sessions skip Manager Confirm-mode cards so spoken generate runs without a click
+- Search generated assets, read scene environment, and inspect timeline, role, and scene context while talking
+
 ## [1.3.8]
 
 - Add realtime endpoint

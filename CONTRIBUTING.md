@@ -155,7 +155,7 @@ Screen Recording, Camera, and Microphone permissions are requested when you use 
 
 ```
 knox-studio/
-├── Cargo.toml                 # package knoxstudio 1.3.8, edition 2024, rust-version 1.98.0
+├── Cargo.toml                 # package knoxstudio 1.3.9, edition 2024, rust-version 1.98.0
 ├── rust-toolchain.toml        # pins rustc 1.98.0 + rustfmt + clippy
 ├── Makefile                   # build, test, lint, bundle, release
 ├── build.rs                   # Swift FFI compile, macOS 13 deployment target
