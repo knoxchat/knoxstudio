@@ -22,7 +22,7 @@ SHELL := /bin/bash
 
 # ── Project Configuration ─────────────────────────────────────────────────────
 APP_NAME := KnoxStudio
-VERSION := 1.3.7
+VERSION := 1.4.0
 BUNDLE_ID := com.knoxstudio.knoxstudio
 MIN_MACOS := 13.0
 
@@ -58,7 +58,7 @@ help:
 	@echo ""
 	@echo "Development:"
 	@echo "  make build       Build debug binary"
-	@echo "  make run         Build and run debug binary"
+	@echo "  make run         Build and run debug binary (OAuth → localhost)"
 	@echo "  make test        Run all tests"
 	@echo "  make lint        Run clippy + format check"
 	@echo "  make fmt         Auto-format code"
@@ -76,6 +76,7 @@ help:
 	@echo "  make bundle      Create .app bundle"
 	@echo "  make sign        Code sign the app bundle"
 	@echo "  make dmg         Create DMG installer"
+	@echo "  make update-feed Write latest.json next to the DMG (GitHub auto-update)"
 	@echo "  make notarize    Submit DMG for Apple notarization"
 	@echo "  make dist        Full release: check → release → bundle → sign → dmg"
 	@echo ""
@@ -103,7 +104,9 @@ release:
 
 .PHONY: run
 run: build
-	@echo "▸ Running KnoxStudio..."
+	@echo "▸ Running KnoxStudio (OAuth → localhost:3001 / localhost:4000)..."
+	KNOX_OAUTH_AUTHORIZE_URL=http://localhost:3001/oauth2/authorize \
+	KNOX_OAUTH_API_BASE=http://localhost:4000 \
 	$(DEBUG_DIR)/knoxstudio --debug
 
 .PHONY: run-release
@@ -344,6 +347,7 @@ dmg: bundle sign
 		--app "$(APP_BUNDLE)" \
 		--dmg "$(DMG_PATH)" \
 		--bundle-id "$(BUNDLE_ID)"
+	$(MAKE) update-feed
 
 .PHONY: notarize
 notarize:
@@ -480,6 +484,13 @@ dmg-pretty: bundle sign
 	@echo "▸ Creating DMG with custom background..."
 	@bash scripts/create_dmg.sh
 	@echo "✓ DMG created: $(DMG_PATH)"
+	$(MAKE) update-feed
+
+.PHONY: update-feed
+update-feed:
+	@echo "▸ Generating auto-update feed (latest.json)..."
+	@bash $(ROOT_DIR)/scripts/generate_update_feed.sh "$(DMG_PATH)"
+	@echo "✓ Upload target/latest.json with the DMG on the GitHub Release"
 
 # Full release workflow
 .PHONY: release-full

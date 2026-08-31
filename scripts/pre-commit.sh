@@ -3,8 +3,9 @@
 # Commits are rejected unless format, clippy, and tests all pass.
 set -euo pipefail
 
-ROOT="$(git rev-parse --show-toplevel)"
-cd "$ROOT"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CRATE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$CRATE_DIR"
 
 if [[ "${SKIP_QUALITY_GATE:-}" == "1" ]]; then
     echo "⚠ SKIP_QUALITY_GATE=1 — pre-commit cargo checks skipped"

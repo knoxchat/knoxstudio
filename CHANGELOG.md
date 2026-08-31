@@ -1,5 +1,49 @@
 # Changelog
 
+## [1.4.0]
+
+### Added
+
+- Auto-update from [GitHub Releases](https://github.com/knoxchat/knoxstudio/releases): check `latest.json` (with API fallback), verify the DMG checksum and Developer ID, replace the installed app, and relaunch. Preferences still has Check for Updates / auto-check.
+
+### Inspector — preview matches export
+
+- Annotation text, strokes, shadows, and corners use **composition pixels** (the project canvas, usually 1920 wide), so a 48 px label on the preview is the same relative size in a 1080p or 720p export
+- Export uses the same Latin-then-Noto font stack as the canvas, so "Hello World" is no longer a different width or Regular-only Noto face in Quick Look
+- Text wraps to the annotation box; Inspector Size changes wrap width, not font size
+- Typography in Annotate: font family (proportional / monospace), size, bold / italic / underline, and left / center / right alignment — preview and export both honor them
+- Line and arrow endpoints and callout tails are Inspector fields, not canvas-only; templates use EN/ZH copy and composition-pixel sizes
+- Drawing an annotation always creates a **linked** timeline clip; deleting one side removes the other; Timing edits the clip, not an orphan overlay
+- Annotation list filters to the playhead, shows layer, and reorders layers by drag; Callout and numbered Step have tool shortcuts **1–9**
+- **Annotation keyframes** for position, scale, rotation, and opacity (same diamonds as Actions). Preview follows the playhead; export writes a PNG sequence when any of those properties are keyed, otherwise a static overlay plus fade
+- Lock, visibility, and layer order undo as recorded commands instead of a full project snapshot; dragging to reorder layers is one undo step
+- Export rasterizes **every** annotation kind — including simple rectangles and highlights — through the same PNG drawer as the canvas, so fill, stroke, and corners match preview (ffmpeg `drawbox` is no longer used)
+
+### Inspector — clip, audio, actions, filters
+
+- Selecting a clip or annotation opens the matching Inspector tab (Video / Audio / Annotate); `⌘1` focuses the panel **and** that tab. Tab and panel width (up to ~380 px) persist
+- Clip tab: in/out points, probed duration off the hot path, lock goes through undo. Annotation clips jump to Annotate instead of an empty Video page
+- Audio processing (normalize / ducking / noise reduction, fades) is undoable; empty state when the clip has no audio
+- Actions: speed includes reverse, keyframes stay inside the clip, opacity lives here only
+- Multi-select applies volume, mute, and opacity to every selected clip as one undo step; unique fields (name, start, in/out, offset, color, speed, transform) show **Mixed** and stay disabled
+- **Filters** is color grading: brightness, contrast, saturation, temperature, Reset, and B&W / Warm / Cool presets. Preview tints the frame; export uses matching ffmpeg `eq` / `colorbalance`. Identity grade adds no filter. Timeline clip-chip color moved to the Clip tab
+- Tools, Templates, Typography, and Transform sections collapse; open/closed state is remembered
+- Empty states instead of greyed-out dummy sliders: select a clip, select or draw an annotation, or "this clip has no audio"
+- Audio Peak/RMS meters follow the playhead; volume can be keyed like opacity, with per-key ease (clip and annotation tracks)
+- Canvas move/resize of an annotation writes a key at the playhead when Position or Scale is already keyed
+- Still-image duration is editable on the Clip tab; locked clips show a notice on Clip and Audio
+- Audio tab can add a crossfade with the neighboring clip; Annotate Transform has aspect lock and a nudge amount
+- Text / callout / step have line height and letter spacing; click-effect changes undo per field
+
+### Sign in with Knox.chat
+
+- Preferences → Defaults: **Sign in with KnoxStudio** (OAuth2 + PKCE) instead of pasting an API key as the primary path. Production consent is `https://knoxstudio.ai/oauth2/authorize`; token exchange stays on `https://api.knox.chat`.
+- After you allow access in the browser, the app mints a hidden `KnoxStudio Desktop` key and stores it in the macOS Keychain
+- Connected account shows `@username`; Sign out revokes the key on the server when the network is available
+- **Advanced** still accepts a pasted `sk-` key, including keys saved before this change
+- Cancel after mint could leak a key & Advanced paste left a stale OAuth session
+- Shape AI models config modal bars fill the same horizontal bounds
+
 ## [1.3.9]
 
 ### Voice Director — studio modes by speech
