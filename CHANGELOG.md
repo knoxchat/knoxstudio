@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.4.1]
+
+### Changed
+
+- Theme (light/dark) and language controls moved from the transport bar to the top bar
+- Title bar shows a centered **KnoxStudio — project name**; Screenplay / Canvas moved from the sidebar footer to the leading end of the title bar, after the traffic lights
+- Left and right sidebar sections can be toggled from the title bar
+- Voice chrome uses a single status line that moves Connecting → Ready → Listening → Thinking → Speaking without stacking the same words
+- Stronger multilingual UI coverage
+
+### Fixed
+
+- Export status modal now fully greys out the canvas behind it
+
 ## [1.4.0]
 
 ### Added
