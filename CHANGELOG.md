@@ -1,5 +1,86 @@
 # Changelog
 
+## [1.4.2]
+
+### Added
+
+- Drop PDFs, presentations, spreadsheets, CSVs, and other office files onto the agent composer to attach them as context
+- Originals are kept in `~/.knoxmedia/docs/`; a Markdown copy is created beside them so the agent can read the document
+- Converted Markdown files appear in `@` mentions from `docs/`, so you can reference them again in later turns
+- Click a Markdown file in the Media Library `docs/` folder to open it in the Screenplay Editor for preview and edit
+
+### Timeline & editing
+
+- Fit modes: Contain, Cover, Stretch, and None
+- Crop a clip from the Inspector or canvas handles
+- Anchor point so scale and rotation orbit a chosen origin
+- Blend modes: Multiply, Screen, Overlay, Add, Darken, and Lighten
+- Speed ramps, reverse, freeze frame, and slow-mo quality (Duplicate, Blend, Optical)
+- J / K / L shuttle: reverse, pause, play, tap for 2× / 4× / 8×
+- Compound clips: nest a selection, double-click to open, export the nest
+- Transitions in one place: crossfade, dissolve, dip, wipes, slides and pushes in all directions, zoom dissolve, blur dissolve
+- Camera PiP as circle, rounded rect, square, or full-frame video
+- Multi-select rotation, fit, align, and distribute on the canvas
+- Slip tool (Y): change what’s inside a clip without moving its edges
+
+### Animation
+
+- Expand a clip to edit keyframe lanes on the timeline
+- Hold and Bezier easing; value graph under the timeline with draggable handles
+- Motion path on the canvas when Position X and Y are keyed
+- One-click motion presets: Ken Burns, Pop in, Fade up, Slide, Drift, Punch-in
+- Optional Ken Burns on new stills (off for existing projects)
+- Motion blur on fast-moving clips
+- Auto-key: the next move writes a key at the playhead
+- Copy, paste, and reverse keyframes
+- Parent / follow so a label or PiP stays stuck to a moving clip
+
+### Color & effects
+
+- Per-clip effect stack: enable, mix, reorder, and search by category
+- Color grade: exposure, gamma, highlights, shadows, hue, vibrance, plus High contrast / Fade film / Night
+- Gaussian blur, sharpen, vignette, 3D LUT, and RGB curves
+- Clip mask (ellipse, rectangle, freehand) with invert and feather
+- Blur region (pixelate a password) and spotlight (darken everything else)
+- Chroma key for green or blue screen
+- Adjustment layer that grades all video below it
+- Keyframe grade, blur radius, and vignette amount
+- Film grain and solid color clips (fade to black / white)
+
+### Titles, cursor & captions
+
+- Zoom-to-region: draw a box and the clip punches in, holds, then eases out
+- Auto-zoom on recorded clicks
+- Styled pointer overlay: show/hide, scale, and scale-on-click
+- Click effects: ripple, sonar, freeze ring, with different left and right colors
+- Title in/out: fade, slide, type-on, highlight-on, and draw-on
+- Text outline, shadow, and rounded background plate
+- Pick any system font for titles (CJK falls back when a face is missing)
+- Safe-area guides on the canvas: title-safe, action-safe, 9:16, 1:1
+- Caption track: add cues, import/export SRT and VTT, burn in or write a sidecar, auto-caption from speech
+
+### Audio
+
+- Mixer strip: volume, pan, mute, solo, and Peak/RMS meters
+- 3-band EQ, high-pass, compressor, and limiter, with a Voice preset
+- Ducking you can see: music dips under dialogue with amount, attack, and release
+- Fade-curve preview on audio overlaps
+
+### Export & playback
+
+- H.264 / H.265 quality that actually changes the file; Hardware, Software, or Auto encoder
+- ProRes Fastest / Normal / Slowest as 422 LT, 422 HQ, and 4444
+- Export Whole project, In to Out, Selection, or Marker to Marker
+- GIFs keep camera PiP and overlays instead of dropping them
+- Social presets: TikTok / Reels 9:16, YouTube 1080p and 4K, Square, Twitter / X
+- YouTube chapter list from timeline markers
+- Playback Proxy / Auto / Full; export always uses the original
+- Smoother preview while playing, full quality when paused; notification when export finishes
+
+### Voice Director
+
+- “Punch in here”, “blur this password”, “make it warm”, “caption this clip”, “export in to out”
+
 ## [1.4.1]
 
 ### Changed

@@ -8,7 +8,7 @@ Whether you're teaching a course, shipping a product demo, telling a story, or p
 
 **Capture it. Shape it. Bring it to life with AI. Then share it with the world.**
 
-| ![](./media/dark-screenshot.png) |
+| ![](./media/dark-theme.png) |
 |-|
 
 
