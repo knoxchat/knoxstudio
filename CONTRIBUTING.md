@@ -24,18 +24,19 @@ Deeper architecture notes live in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). 
 4. [First-time setup](#first-time-setup)
 5. [Repository map](#repository-map)
 6. [Day-to-day development](#day-to-day-development)
-7. [Required quality gate (before every commit)](#required-quality-gate-before-every-commit)
-8. [What each check means](#what-each-check-means)
-9. [Git hook](#git-hook)
-10. [Testing](#testing)
-11. [Code style](#code-style)
-12. [Internationalization](#internationalization)
-13. [Native Swift / FFI](#native-swift--ffi)
-14. [Do not change without review](#do-not-change-without-review)
-15. [Branch, commit, and pull request](#branch-commit-and-pull-request)
-16. [Review checklist](#review-checklist)
-17. [Troubleshooting](#troubleshooting)
-18. [Maintainer-only work](#maintainer-only-work)
+7. [Signing in locally against staging](#signing-in-locally-against-staging)
+8. [Required quality gate (before every commit)](#required-quality-gate-before-every-commit)
+9. [What each check means](#what-each-check-means)
+10. [Git hook](#git-hook)
+11. [Testing](#testing)
+12. [Code style](#code-style)
+13. [Internationalization](#internationalization)
+14. [Native Swift / FFI](#native-swift--ffi)
+15. [Do not change without review](#do-not-change-without-review)
+16. [Branch, commit, and pull request](#branch-commit-and-pull-request)
+17. [Review checklist](#review-checklist)
+18. [Troubleshooting](#troubleshooting)
+19. [Maintainer-only work](#maintainer-only-work)
 
 ---
 
@@ -155,7 +156,7 @@ Screen Recording, Camera, and Microphone permissions are requested when you use 
 
 ```
 knox-studio/
-├── Cargo.toml                 # package knoxstudio 1.3.9, edition 2024, rust-version 1.98.0
+├── Cargo.toml                 # package knoxstudio 1.4.3, edition 2024, rust-version 1.98.0
 ├── rust-toolchain.toml        # pins rustc 1.98.0 + rustfmt + clippy
 ├── Makefile                   # build, test, lint, bundle, release
 ├── build.rs                   # Swift FFI compile, macOS 13 deployment target
@@ -212,6 +213,37 @@ Suggested loop:
 4. Run `cargo fmt --all` while iterating.
 5. Before `git commit`, run `make pre-commit` (the hook will run it anyway).
 6. Open a pull request only when the gate is green.
+
+---
+
+## Signing in locally (OAuth)
+
+`make run` and `cargo run -- --debug` open the **local** website and exchange tokens against the **local** backend. A release build opens `https://knoxstudio.ai/oauth2/authorize` and exchanges tokens at `https://api.knox.chat`.
+
+Prerequisites (already the usual local stack):
+
+1. Backend on `:4000` — `cd backend && cargo run`
+2. Website on `:3001` — `cd website && npm run dev`
+3. Local Postgres has the `knox_studio_desktop` row (migration `202608311800_seed_knoxstudio_desktop_oauth`)
+
+Then in desktop:
+
+```bash
+make run                 # OAuth → http://localhost:3001 and http://localhost:4000
+cargo run -- --debug     # same defaults
+```
+
+Sign in on `http://localhost:3001` if the consent page asks you to log in. The loopback redirect is always `http://127.0.0.1:8732/callback`. Do not pick another port if 8732 is busy — free the port instead. Do not put a client secret in the desktop binary.
+
+A local sign-in mints a key against `localhost:4000`. Manager/Editor still call `https://api.knox.chat` unless you also change those endpoints — use Sign out before a production test so the local `sk-` is not left in Keychain.
+
+To point a debug build at staging or production instead:
+
+```bash
+export KNOX_OAUTH_AUTHORIZE_URL=https://knoxstudio.ai/oauth2/authorize
+export KNOX_OAUTH_API_BASE=https://api.knox.chat
+make run
+```
 
 ---
 

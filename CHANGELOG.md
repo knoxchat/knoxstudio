@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.3]
+
+- Shortener storyboard_projects to be storyboard for media library list
+- Keeps a quarter-screen of empty room after the last clip
+- Move Title-safe feature to transport from canvas
+- Clickable target in the app uses the pointing-hand cursor instead of the default arrow
+- Modal UI Optimizations
+- Remove First Run Setup modal
+- Remove project template
+- Defaults tab by default with first time app launch
+- Dim covers the strip under the title bar
+- Fix Inspector templates were drawing type larger than their boxes
+- Canvas actions improvement
+- Improve OAuth UX
+- Unchecked the camera stays off — no hardware connection
+
 ## [1.4.2]
 
 ### Added
@@ -632,7 +648,6 @@
 - Autosave snapshots
 - Recent files list
 - Undo/redo history
-- Project templates
 
 ### Technical
 - Rust + Swift FFI architecture

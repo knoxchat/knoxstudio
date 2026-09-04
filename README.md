@@ -11,7 +11,6 @@ Whether you're teaching a course, shipping a product demo, telling a story, or p
 | ![](./media/dark-theme.png) |
 |-|
 
-
 ## Why KnoxStudio?
 
 Most people who make videos juggle a messy stack of tools: one app to record, another to edit, a third for voiceover, a fourth for AI generation, and endless exporting and re-importing in between. It's slow, expensive, and exhausting.
@@ -20,7 +19,6 @@ KnoxStudio replaces that entire stack. Recording, editing, audio, annotations, s
 
 It's built for macOS from the ground up — so it launches fast, stays responsive on long timelines, respects system permissions, and feels at home with keyboard shortcuts, light and dark themes, and a clean interface that gets out of your way.
 
-
 ## Who It's For
 
 - **Educators & course creators** — record lessons, add callouts and numbered steps, and export crisp tutorials.
@@ -28,7 +26,6 @@ It's built for macOS from the ground up — so it launches fast, stays responsiv
 - **Content creators & storytellers** — write a screenplay, let AI direct it into shots, and assemble it on a real timeline.
 - **Founders & professionals** — explain features, pitch ideas, and share knowledge without hiring a video team.
 - **Anyone** who wants studio-quality results without a studio-sized learning curve or budget.
-
 
 ## What You Can Do
 
@@ -85,7 +82,6 @@ Import video, audio, and images by dragging them in. Browse everything in a Medi
 | Screenplay | Markdown, Fountain, plain text, JSON, YAML |
 
 Projects save as `.knoxstudio` documents you can double-click to reopen. Autosave snapshots, recent files, and missing-media relink help keep long projects safe.
-
 
 ## AI That Works Like a Production Crew
 
@@ -164,7 +160,6 @@ Keep your cast consistent across every generated shot:
 
 Generate multiple AI takes, compare them side by side, and choose **Use** on the one that wins. Creative decisions stay yours; the agent just multiplies your options.
 
-
 ## Export Anywhere
 
 When you're done, export exactly what you need — with annotations, click effects, transforms, transitions, and your full multi-track mix rendered faithfully.
@@ -181,7 +176,6 @@ When you're done, export exactly what you need — with annotations, click effec
 
 Choose resolution presets up to **4K**, a percentage of the source, or a custom size. Dial in bitrate and quality (fast / normal / slow). Built-in presets cover common goals — Screen Tutorial 1080p, Course Master 4K, Web Preview 720p, Animated GIF Small, Audio MP3, and Audio WAV — and you can save your own. Filenames follow your project name, progress shows ETA, and output is verified after export so you can publish with confidence.
 
-
 ## What Makes It Different
 
 | Advantage | What it means for you |
@@ -197,11 +191,10 @@ Choose resolution presets up to **4K**, a percentage of the source, or a custom 
 | **Reliable by design** | Autosave with rotating snapshots, crash and recording recovery, project integrity checks, and export verification |
 | **Ready for everyone** | English and Simplified Chinese, approachable UI with pro depth underneath |
 
-
 ## Getting Started
 
 1. **Install KnoxStudio** on your Mac (macOS 13 or later, Apple Silicon or Intel).
-2. **Launch the app** and follow first-run setup — language, theme, media engine check, and permissions for Screen Recording, Camera, and Microphone as needed.
+2. **Launch the app.** Set language and theme in Preferences if you want, and grant Screen Recording, Camera, and Microphone permissions when you start recording.
 3. **Pick how you want to begin:**
    - **Record** your screen, camera, microphone, and system audio
    - **Import** existing video, audio, or images by dragging them in
@@ -214,8 +207,7 @@ Press **?** anytime inside the app for the full keyboard shortcut list.
 
 ### AI setup (optional)
 
-To use Manager, Editor, Director, and generation features, add your [KnoxChat API key](https://knox.chat) in Preferences. Models and capabilities update from the live KnoxChat catalog so you always see what's available. Your keys are stored securely in the macOS Keychain.
-
+To use Manager, Editor, Director, and generation features, open **Preferences → Defaults** and choose **Sign in with KnoxStudio**. The app mints a hidden API key after you allow access in the browser and stores it in the macOS Keychain. You can still paste a key under **Advanced**. Models and capabilities update from the live KnoxChat catalog so you always see what's available.
 
 ## Languages, Themes & Accessibility
 
@@ -223,7 +215,6 @@ To use Manager, Editor, Director, and generation features, add your [KnoxChat AP
 - **Dark** and **Light** themes (including high-contrast variants)
 - Full keyboard navigation and VoiceOver-friendly labels
 - In-app shortcut overlay so power users never have to leave the keyboard
-
 
 ## System Requirements
 
@@ -235,11 +226,18 @@ To use Manager, Editor, Director, and generation features, add your [KnoxChat AP
 | **Projects** | `.knoxstudio` document packages |
 | **Updates** | In-app update checks from official releases; signed and notarized distribution |
 
+## Contributing
+
+Developers: see **[CONTRIBUTING.md](CONTRIBUTING.md)** for setup, the required pre-commit Cargo gate (`fmt --check`, `clippy -D warnings`, `cargo test`), and the pull request process.
+
+```bash
+make setup
+make pre-commit
+```
 
 ## Acknowledgments
 
 KnoxStudio uses **FFmpeg** for media processing. FFmpeg is free software licensed under the [LGPL 2.1 or later](https://www.ffmpeg.org/legal.html). See the About dialog and bundled license materials in the app for details.
-
 
 ## The Bottom Line
 
