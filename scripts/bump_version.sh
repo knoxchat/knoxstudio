@@ -2,7 +2,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # KnoxStudio Version Bumping Script
 #
-# Updates version in: Cargo.toml, Info.plist, CHANGELOG.md
+# Updates version in: Cargo.toml, Info.plist, Makefile, build_dmg.sh, dev.sh, CHANGELOG.md
 # Creates git tag and prepares release notes
 #
 # Usage: ./scripts/bump_version.sh <major|minor|patch|VERSION>
@@ -25,6 +25,7 @@ INFO_PLIST="$ROOT_DIR/Info.plist"
 CHANGELOG="$ROOT_DIR/CHANGELOG.md"
 MAKEFILE="$ROOT_DIR/Makefile"
 BUILD_DMG="$ROOT_DIR/build_dmg.sh"
+DEV_SH="$ROOT_DIR/dev.sh"
 
 # ── Helper Functions ──────────────────────────────────────────────────────────
 get_current_version() {
@@ -98,6 +99,14 @@ update_build_dmg() {
     fi
 }
 
+update_dev_sh() {
+    local new_version="$1"
+    if [[ -f "$DEV_SH" ]]; then
+        sed -i '' "s/^VERSION=\".*\"/VERSION=\"$new_version\"/" "$DEV_SH"
+        echo "  Updated dev.sh"
+    fi
+}
+
 update_changelog() {
     local new_version="$1"
     local release_date
@@ -165,6 +174,7 @@ create_git_tag() {
         git add "$CARGO_TOML" "$MAKEFILE"
         [[ -f "$INFO_PLIST" ]] && git add "$INFO_PLIST"
         [[ -f "$BUILD_DMG" ]] && git add "$BUILD_DMG"
+        [[ -f "$DEV_SH" ]] && git add "$DEV_SH"
         [[ -f "$CHANGELOG" ]] && git add "$CHANGELOG"
         
         git commit -m "chore: bump version to $new_version"
@@ -219,6 +229,7 @@ update_cargo_toml "$NEW_VERSION"
 update_info_plist "$NEW_VERSION"
 update_makefile "$NEW_VERSION"
 update_build_dmg "$NEW_VERSION"
+update_dev_sh "$NEW_VERSION"
 update_changelog "$NEW_VERSION"
 
 echo ""
