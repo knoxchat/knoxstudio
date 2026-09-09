@@ -22,7 +22,7 @@ SHELL := /bin/bash
 
 # ── Project Configuration ─────────────────────────────────────────────────────
 APP_NAME := KnoxStudio
-VERSION := 1.4.0
+VERSION := 1.4.3
 BUNDLE_ID := com.knoxstudio.knoxstudio
 MIN_MACOS := 13.0
 
