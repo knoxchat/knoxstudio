@@ -1,5 +1,173 @@
 # Changelog
 
+All notable changes to KnoxStudio will be documented in this file.
+
+## [1.5.3] - 2026-09-13
+
+### Added
+
+- Elapsed-duration kit component: hours, minutes, and seconds broken out of a `Duration`, with an optional tenths-of-a-second precision mode for live timers, localized unit labels, and an optional clock icon. Generation cards and the Director pipeline now use it instead of their own `1:02` / `12.3s` strings
+- Generation cards persist and display their permanent output path; the card’s copy dump and the Markdown/plain-text conversation export include `elapsed` and `path`
+- **Show in Finder** on a generation card whose file is no longer at the saved location, plus a "Missing" card state with the last saved path
+- Generation-history lookup by prompt and `source_path` on stored assets, so a restored card can find the real file or the retained source
+
+### Changed
+
+- Production KnoxStudio API origin is now `https://api.knoxstudio.ai` (was `api.knox.chat`) across Manager, Editor, Image, Vision, Video, and Voice models, OAuth authorize / token / userinfo / mint / revoke, the LLM client, the realtime WebSocket origin, and continuity vision. Existing configs with a stale `api.knox.chat` endpoint are rewritten on load
+- AI Agent Configuration opens on the **Defaults** tab, which is now the first sidebar item
+- Canvas quick view follows the active dark/light UI theme instead of always painting a cinema-black backdrop and plate
+- Media Library file tree no longer draws a folder icon per row — only file-type glyphs remain
+- Removed the vendored `egui/` tree
+
+### Fixed
+
+- Opening a past thread no longer restores video cards as live **Pending** jobs; restored cards are settled against generation history
+- History restore keeps the real generation time — from history timestamps or the stored file’s mtime — and the stored file location, instead of resetting the card to `0.0 s` and losing where the output went
+- Generation cards now persist as soon as a job completes or fails, so restoring history shows the finished state rather than a frozen in-flight timer 
+
+## [1.5.2]
+
+GPUI now matches the remaining egui editor, inspector, agent, and screenplay surfaces that were still thinner after the 1.5.0 runtime switch.
+
+Cmd/Shift clip selection no longer depends on finding a sliver of empty track: a modifier-click hits the clip body even when trim handles eat the whole block.
+
+### Timeline
+
+- Cmd-click toggles and Shift-click range-selects clips and gaps without hunting for a tiny hand-cursor gap; trim handles yield to selection while a modifier is held
+- Scrollbar thumbs are draggable; clicking the track jumps scroll
+- Gap menu: named marker header, Red / Green / Blue / Yellow / Orange, and Delete Marker “name”
+- Auto Caption is disabled while a caption job is already running
+- Clip hover tooltip shows Start / Duration / End (`MM:SS.ms`), follows the pointer, and hides during trim or slip
+- Closed-hand cursor while dragging a clip or keyframe; full-height in/out lines; header/content divider; volume and pan presets disable when already at that value
+- Nested-edit window title is `KnoxStudio — Parent › NestedName`
+
+### Canvas
+
+- Rotated titles, shapes, and callouts paint and hit-test around the box center
+- Wrapped type matches egui: align, letter-spacing, plate, shadow, outline, typewriter reveal, highlight
+- Stroke trim and arrow caps on draw-on lines; numbered-step badge sits in a filled plate
+- Inline text editor uses the annotation font, size, color, and plate padding, and grows while typing
+- Out-of-bounds flash is a yellow frame, not a red wash
+
+### Inspector
+
+- Color-fill clips: picker, hex, Black / White, hint
+- Audio overlaps: add / remove, duration, role, mix preview, ducking amount / attack / release
+- Audio tab mute plus analyzing / unavailable waveform copy
+- Reset Anchor; drag the three curve handles; effect stack drag-reorder with insert gap and ghost
+
+### Recording
+
+- Empty-canvas and transport Record run the same preflight as egui: initializing, FFmpeg missing, and screen-capture-off opens Recording prefs instead of failing silently
+
+### Agent
+
+- Director and Storyboard stay in the chat scroller so the thread stays visible
+- Estimate card lists per-shot rows; sequence shot hover is a rich popover
+- Follow-up chips only on the last completed turn
+- @-mention popup sits above the composer
+- Agent config opens on Manager (or the last tab)
+- Voice `set_ui` accepts the egui aliases (`true` / `false`, `en-us` / `zh-cn` / `中文`, `properties` / `chat` / `none` / `off`, razor / slip keys)
+- `[` / `]` verbosity only while the debug console is open
+- Variations grid shows a first-frame thumb for video records
+
+### Screenplay
+
+- Outline is a scene breakdown: block previews, character-tinted dialogue, find hits
+- Git diff: split / unified toggle, gutters, hunk headers
+- Editor context menu: Cut / Copy / Paste / Select All and Send selection to Agent
+- Minimap blocks sized by content and colored by scene status
+
+### App
+
+- One graceful-shutdown path on Quit, window close, unsaved Discard / Save → Quit, and update-install: cancel export, stop voice / AI, finalize recording, persist layout, checkpoint media DB, clean export temps
+- Session error log with copy, clear, Open Panic Log, and Open Crash Reports
+- Debug console lists crash reports (copy / delete / clear), a memory / health / crash stats strip, and a launch toast for unviewed crashes
+- Preferences: custom 1–120 FPS next to presets
+- Shortcuts overlay: Hide, Hide Others, FPS monitor, screenplay Find / Close tab / minimap / line numbers
+
+Voice Director chrome now tells user speech from agent speech by colour and motion, instead of painting both as the same red bars. An open-but-silent session no longer redraws the whole window at display rate.
+
+## [1.5.1]
+
+Fix the GPUI preview path that could grow resident memory into tens of gigabytes until macOS paused or killed the app.
+
+GPUI uploads every distinct `RenderImage` into the Metal sprite atlas and never frees the tile unless `drop_image` is called. Playback, live camera, quick look, and storyboard were minting a new image every frame and dropping only the CPU buffer, so Apple Silicon unified memory kept every old frame resident (~0.5 GB/s at 1080p60, ~2 GB/s at 4K).
+
+Recording on the GPUI runtime now matches the egui behavior: Stop returns immediately instead of freezing the window, Recording and Devices settings stick, and system audio captures real sound instead of digital silence.
+
+### Memory
+
+- Preview, camera PiP, quick-look video, storyboard playback, and Devices camera now retire the previous atlas tile when a new frame arrives
+- CPU composites, rotated clips, and blur-region mosaics reuse one tile while the playhead and pixels are unchanged, instead of uploading a new image on every paint
+- Timeline GPU thumbs and stills are LRU-capped; clearing those caches actually releases Metal tiles
+- Memory-pressure handlers now evict preview and timeline GPU images, not only CPU thumbnail / waveform caches
+
+### Timeline editing
+
+- Delete and Backspace both remove the current selection (clips, gaps, or keyframes); Shift+Backspace ripples the selection and Cmd+Backspace ripples the in/out range, matching the existing Shift+Delete / Cmd+Delete bindings
+- Clicking a clip or gap on the timeline now steals keyboard focus, so Backspace / Delete reach clip and gap editing instead of a text field that happened to hold focus
+- The timeline keeps a `Workspace Playback Timeline` key context, so NLE shortcuts keep firing after a clip or gap click
+- Delete, ripple-delete, and ripple-delete-in/out are ignored while an annotation text label is being edited, so Backspace edits text instead of deleting the clip
+
+### Runtime
+
+- Export progress no longer calls `notify` from inside `render`, which was spinning a full-app redraw for the entire export
+- Waiting for a first decoded frame times out after five seconds, so a stalled or missing decoder cannot pin the animation loop at display rate
+
+### Recording
+
+Stop recording no longer freezes the window. Native ScreenCaptureKit / AVFoundation teardown and `ffprobe` probes run on a worker; the record button becomes a disabled spinner until the take is imported, so repeated clicks cannot start a second take on top of one that is still finalizing.
+
+- Recording and Devices preferences now stick: `AppSession.capture` is the single source of truth, so the 250ms poll no longer overwrites Recording-tab toggles with the manager's stale copy
+- System audio is independent of screen capture, so an audio-only take is valid and is imported instead of being silently deleted
+- ScreenCaptureKit no longer excludes KnoxStudio's own output, which was recording digital silence when previewing timeline media or capturing a walkthrough of the app
+- A silent system-audio capture is reported in the UI instead of adding a dead track that looks like a success
+- Native start no longer reports success when the ScreenCaptureKit semaphore times out
+- Camera permission no longer deadlocks the main thread waiting on the system prompt
+- Quitting mid-take finalizes the recording so the `.mov` is playable
+- Import uses durations and resolution already probed on the finalize worker, so `ffprobe` never runs on the UI thread
+
+### Voice Director
+
+The composer mic, status meter, and header badge share one clock and the same smoothed mic / playback envelopes. User speech is aqua with inward ripples; the agent is violet with outward ripples. Thinking is amber chasing dots; connecting breathes teal; error is a static red.
+
+- Mic orb fill, glyph, and ripple rings follow session state and live loudness instead of a static teal/red circle
+- Status row adds a 15-bar meter beside the hint; live captions stay body-coloured because the meter already carries the state
+- Header Voice Director badge tints to the same accent and glyph as the composer orb, including the device-picker speaker
+- Mic RMS is attack/release-smoothed and noise-gated; assistant playback envelope is exposed so AI speech drives the indicator instead of leftover speaker bleed into the mic
+- Voice chrome only schedules frames while something is moving (speech, thinking, connecting, or a loud ready-state room). A quiet Connected session stays off the animation loop; reduced motion draws a static snapshot
+
+## [1.5.0]
+
+KnoxStudio now runs on **GPUI + gpui-kit** instead of egui/eframe. The NLE, capture, export, and AI domain stay the same; the window runtime is a retained-mode Mac app.
+
+### Runtime
+
+- GPUI with gpui-kit: GPU-composited window, native TitleBar, resizable splits, overlays, and semantic light/dark theme
+- Native macOS application menu (KnoxStudio / File / Edit / View / Playback / Window / Help) with system Undo, Redo, Cut, Copy, Paste
+- Finder, Dock, and `open` file events through GPUI `on_open_urls` — no vendored winit patch
+- Session split into independent entities: `Document`, `Workspace`, canvas, timeline, Inspector, Agent, Screenplay
+- Playback clock advances the playhead without rebuilding Inspector, Agent, or chrome every display refresh; canvas and timeline request their own animation frames
+- Custom GPU `Element`s for the preview canvas and the timeline (hit-testing, paint, thumbs, waveforms)
+- Screenplay editor on the kit rope `Editor`: Tree-sitter highlighting, line numbers, soft wrap, find/replace, outline, and git
+- Agent composer is a real textarea with @ mentions, decorations, and streaming markdown — not a per-frame egui text edit
+- In-app FPS HUD (`gpui-fps`) from GPUI frame timings: FPS, frame time, P95, drop rate, CPU / GPU / memory
+- Dedicated tokio runtime so AI, export, and IO never block the UI thread
+- Bundle FFmpeg/FFprobe 9.0.1
+
+### What this unlocks
+
+- Native Mac chrome: traffic lights, menus, and OS edit actions instead of a painted-in title bar
+- Smoother preview while playing: only the surfaces that show time (canvas, timeline, meters) tick
+- A Zed-class text substrate (rope + Tree-sitter + LSP types) for screenplays and a future coding agent
+- Observable session state (entities + subscriptions) as working memory for agents and checkpoints
+- Drop the eframe/winit activation workaround that existed only to keep bundled-app file-open correct
+
+### Still the same product
+
+Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth, and autosave are the 1.4.x feature set on the new runtime. Domain Criterion benches (`project_benchmarks`) are unchanged; they measure project JSON and timeline ops, not GPU frames.
+
 ## [1.4.3]
 
 - Shortener storyboard_projects to be storyboard for media library list
