@@ -2,7 +2,12 @@
 
 All notable changes to KnoxStudio will be documented in this file.
 
-## [1.5.3] - 2026-09-13
+## [1.5.4]
+
+- Git Improvements
+- File Tree Improvements
+
+## [1.5.3]
 
 ### Added
 
