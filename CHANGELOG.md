@@ -2,6 +2,11 @@
 
 All notable changes to KnoxStudio will be documented in this file.
 
+## [1.5.5] - 2026-09-15
+
+- Screen capture improvements
+- Video player optimizations
+
 ## [1.5.4]
 
 - Git Improvements
