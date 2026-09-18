@@ -2,7 +2,42 @@
 
 All notable changes to KnoxStudio will be documented in this file.
 
-## [1.5.5] - 2026-09-15
+## [1.5.7]
+
+### Added
+
+- Voice Isolator
+- Voice Changer
+- Forced Alignment
+- Sound Effects
+
+### Changed
+
+- Clips on a track can now be targeted the same way from typed prompts, @ mentions, and realtime voice — by name, filename, or short id, not only UUID.
+
+### Fixed
+
+- Export state
+- Backspace in the agent chat field was aborting on macOS’s IME path
+
+## [1.5.6]
+
+### Added Knox Audio Endpoints
+
+- Music
+- TTS
+- STT
+
+### Fixed
+
+- Agent audio-card **Play** seeks the clip on the timeline and uses KnoxStudio playback (same as video cards), instead of opening the MP3 in the system player
+- Asking the Manager to add captions/subtitles or transcribe an existing video now goes to the Editor STT path (`caption_clip`) instead of `generate_video`
+
+### Changed
+
+- Caption cues use larger bold type on a compact bottom-center pill (shrink-wrapped to the words) instead of a full-width bar with small text
+
+## [1.5.5]
 
 - Screen capture improvements
 - Video player optimizations
