@@ -2,6 +2,70 @@
 
 All notable changes to KnoxStudio will be documented in this file.
 
+## [1.5.8]
+
+### Timeline
+
+#### Added
+
+- Drag a clip above, between, or below tracks to create a new lane
+- Insertion bar that shows where the new track will land
+- Auto-scroll while dragging near the top or bottom of the track list
+- Drag track headers to reorder
+- Resize track height from the header edge
+- Overwrite edit mode
+- Option-drag to copy a clip onto another lane or a new track
+- Magnetic tool to close gaps after a move
+- Option-drop to replace a clip with incoming media
+- Shift-lock a drag to time only or track only
+- Shortcuts to add, delete, and move tracks
+
+#### Changed
+
+- Dropping or placing media on occupied time creates a new track instead of stacking
+- Empty tracks are removed after you move their last clip away
+- New video overlays sit above; new audio sits below
+- Detach Audio fully splits picture and sound so they edit independently
+- Snap is now edge snapping; magnetic gap-close is its own tool
+
+### Media Library
+
+#### Added
+
+- Permanent Delete (`⌘⇧⌫`) with a confirmation that lists names; not undoable. Backspace still moves to Trash
+- Restore File on git-dirty screenplay files, with a prompt
+- Open in Terminal (`⌥⌘T`)
+- Live validation under the rename row for empty names, collisions, and stray whitespace
+- Trailing `/` on a new name creates a folder; `foo/bar.md` creates missing parents
+- Sort directories first, files first, or mixed; names use natural order (`file2` before `file10`)
+- Hide gitignored files; optional git status letters (M / A / D / U / !) and bold folders
+- Auto-reveal the active editor file
+- Horizontal scroll for long names (clip remains the fallback)
+- Disable Drag and Drop in the tree without losing drag onto the canvas
+
+#### Changed
+
+- New File / New Folder start empty; empty Enter cancels
+- Paste onto a name collision opens rename with ` copy` selected
+- Undo of New File / Duplicate / Paste moves the new path to Trash so Redo can restore it
+- Multi-select move, trash, and paste undo as one step
+- Trash lists the files and warns if one is open in the editor
+- Cut rows stay dimmed until paste or Escape
+- `⌘Enter` / double-click opens permanently; click / Space still previews
+
+#### Fixed
+
+- Inline rename accepts typed letters; F2 selects the stem, not the extension
+- Escape cancels rename and returns focus to the tree
+- First click of a newly selected row no longer starts rename; slow-click still does
+- Click empty space in the file tree to deselect rows
+
+#### Performance
+
+- Source Control and Media Library switch immediately; git status, history, and file-tree git paint run in the background with a loading state instead of freezing clicks
+- The Media Library only reads expanded folders, so large `image/` / `video/` libraries no longer stall expand, search, or panel toggles
+- Preference writes (layout, expand, inspector) coalesce on a background thread so sidebar clicks do not wait on `prefs.json` 
+
 ## [1.5.7]
 
 ### Added
