@@ -2,6 +2,29 @@
 
 All notable changes to KnoxStudio will be documented in this file.
 
+## [1.5.9]
+
+### UI
+
+#### Added
+- Inline `data:` images in Markdown and HTML
+- System Reduce Motion on macOS, Windows, and Linux (Accessibility → Display), so caret blink, streaming dots, and kit animations honor the OS setting
+- Chart hover that fades out after the pointer leaves a data point
+- Scroll bounce, streaming-text fade, and touch text-selection handles from the UI kit
+
+#### Changed
+- Improved real-time voice interaction
+- Dialogs shrink to stay inside small windows instead of running off the edges
+- FPS HUD uses the display refresh rate as its frame budget (a 120 Hz ProMotion screen is graded at 8.3 ms, not 16.7 ms)
+- A hidden FPS HUD stops tracing frames; the HUD's own redraws are left out of the readings
+- macOS Reduce Motion is read from the system API instead of a `defaults` subprocess
+- **Startup model catalogs**: the chat, video and audio catalogs, plus the voices list, now load in parallel instead of one after another. That was about 20 seconds of sequential network waits. They also share one HTTP client, so connections are reused.
+- **Agent chat list**: the list of visible messages is now computed once per render. Before, it was recomputed for every row, which slowed long conversations.
+- Hardware encoding took the same time as before and about 20–30% less CPU.
+
+### Fixed
+- Recording camera
+
 ## [1.5.8]
 
 ### Timeline
