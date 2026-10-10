@@ -2,6 +2,35 @@
 
 All notable changes to KnoxStudio will be documented in this file.
 
+## [1.5.10]
+
+### UI
+
+#### Added
+- First launch and every relaunch fill the current Mac display's usable area (menu bar and Dock excluded)
+
+#### Changed
+- Dark theme background
+- Source Control / git is temporarily removed from the Media Library, screenplay editor, and menus
+- Save (`⌘S`) copies the project bundle on a worker so the window stays responsive
+- Autosave serializes off the UI thread
+- Preview keeps native BGRA frames instead of copying and swapping channels every tick
+- Camera PiP and cursor overlays fold into one encode instead of extra full-frame passes
+- Voice tools, device enumeration, and media import no longer block the UI on network or ffmpeg
+- Chat history writes incrementally instead of rewriting the file every turn
+
+#### Fixed
+- Screenplay editor no longer sticks on "Parsing..." while typing
+- File tabs close correctly
+- Stale `project.json.zst` no longer silently reverts newer edits
+- Autosave and bundle writes fsync so a crash cannot leave a half-written project
+- Restoring a backup migrates and validates the project; SQLite restores drop stale WAL/SHM
+- Auto-update copies the new app aside and rolls back if install fails
+- Export no longer stays stuck "Exporting" if the encode thread panics; quitting mid-export kills ffmpeg
+- Microphone capture works on 44.1 kHz devices (AirPods HFP) instead of aborting
+- A ScreenCaptureKit start timeout no longer leaves an abandoned live stream
+- Agent HTTP/SSE calls time out instead of hanging a turn forever
+
 ## [1.5.9]
 
 ### UI
