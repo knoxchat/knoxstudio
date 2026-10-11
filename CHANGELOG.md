@@ -2,7 +2,80 @@
 
 All notable changes to KnoxStudio will be documented in this file.
 
-## [1.5.10]
+## [1.6.0]
+
+### Knox-Studio
+
+#### Added
+- Media library search: BM25 ranking plus ripgrep-style content scan over all of `~/.knoxmedia` (docs, screenplay, video, audio, image, nested folders). `@` mentions, Voice `target_item`, and Manager/Writer tools resolve library files that are not on the timeline
+- `library_search` / `library_read` / `library_write` / `library_remove` tools for Manager, Writer, and realtime Voice — the agent looks up `@313.md` instead of asking for a path
+- Knox-Studio (`knox/knox-studio`) is the one model for Manager, Editor, Director, storyboard, and generation. Video, image, music, speech, sound effects, isolation, voice conversion, alignment, realtime voice, and vision all go through it; the server picks the specialist
+- Sign in with KnoxStudio.ai is enough to bring the agents online — no separate Manager, Editor, or sub-model entries
+
+#### Changed
+- Generation, STT, isolation, voice conversion, and forced alignment always send Knox-Studio instead of leftover specialist ids
+- Existing `config.yaml` specialist rows collapse to one Knox-Studio entry on load
+- SI Agent Configuration is a single pane: KnoxStudio account plus generation, execution, and continuity defaults
+- Voice Director connects as Knox-Studio on the realtime socket (the backend still chooses the speech model)
+
+#### Removed
+- Manager, Editor, and Sub-Models tabs, plus per-model pickers and parameter sliders in SI Agent Configuration
+
+#### Fixed
+- Voice Director stays connected after Ready instead of dropping the realtime socket
+
+### UI
+
+#### Added
+- First launch and every relaunch fill the current Mac display's usable area (menu bar and Dock excluded)
+- Preferences → General → Startup: Show welcome on launch (on by default; turn off to skip the welcome card)
+- Preferences → Recording → Countdown: set any delay from 1–60 seconds, or turn the countdown off so Record starts immediately
+
+#### Removed
+- Generic follow-up chips after every reply (Make it shorter / Generate a video of this / Continue). Chips only appear when the agent asked a question.
+
+#### Changed
+- Preferences, SI Agent Configuration, Export, and other settings dialogs share one chrome: title-case sections, filled cards, cyan accent marks, and a popover surface with a tighter footer
+- Screen-recording countdown is a dimmed ring overlay with Get ready, remaining seconds, and Esc to cancel; the card follows dark and light theme
+- Menus, dialogs, and notices say Super Intelligence / SI instead of Artificial Intelligence / AI (OpenAI and similar product names stay)
+- Sent `@mentions` stay inline in the user bubble (same line as the sentence) with a frosted pill that reads on dark and light teal bubbles, matching the composer highlight instead of a dark file chip on a new line
+- Clicking audio, video, or image in the Media Library switches to Canvas for quick view, even from Screenplay; clicking markdown, JSON, and other editable files switches to Screenplay
+- Filenames in the SI Agent panel (`@mentions`, inline chips, chat stream, and history) open the file the same way a Media Library row does: Canvas quick view for audio / video / image, Screenplay for editable text
+- Light theme chrome uses mint/cyan washes; brand cyan is for text, borders, and small CTAs instead of dark-green fills
+- Dark theme follows One Dark Pro surfaces (foreground, menus, selections, and hover)
+- SI Agent composer, generation cards, and chat chrome are tighter (smaller padding, radii, and shadows); user bubbles stay tinted in dark theme
+- SI Agent header and history icons tint on hover instead of sitting in boxed tiles
+- Editing a chat message uses a full-width card with wrapping text, Save / Cancel, and ⌘↵ / Esc hints instead of a cramped bubble
+- Source Control / git is temporarily removed from the Media Library, screenplay editor, and menus
+- Save (`⌘S`) copies the project bundle on a worker so the window stays responsive
+- Autosave serializes off the UI thread
+- Preview keeps native BGRA frames instead of copying and swapping channels every tick
+- Camera PiP and cursor overlays fold into one encode instead of extra full-frame passes
+- Voice tools, device enumeration, and media import no longer block the UI on network or ffmpeg
+- Chat history writes incrementally instead of rewriting the file every turn
+- Bundle FFmpeg/FFprobe 9.0.2
+- Chat copy actions show a check on the button for 3 seconds instead of a Copied toast
+
+#### Fixed
+- Composer `@mention` highlights follow dark/light theme when it changes, instead of keeping the wash from when they were typed
+- Sidebar and timeline splitters stay under the pointer when dropped instead of jumping to a lagged layout sample
+- Clicking a Media Library folder name expands or collapses it, including the sticky header; that no longer dismisses canvas quick view
+- Chat-stream status icons sit on the text line instead of riding above it
+- Streaming chat text wraps inside the panel instead of running past the edge
+- Screenplay editor no longer sticks on "Parsing..." while typing
+- File tabs close correctly
+- Stale `project.json.zst` no longer silently reverts newer edits
+- Autosave and bundle writes fsync so a crash cannot leave a half-written project
+- Restoring a backup migrates and validates the project; SQLite restores drop stale WAL/SHM
+- Auto-update copies the new app aside and rolls back if install fails
+- Export no longer stays stuck "Exporting" if the encode thread panics; quitting mid-export kills ffmpeg
+- Microphone capture works on 44.1 kHz devices (AirPods HFP) instead of aborting
+- A ScreenCaptureKit start timeout no longer leaves an abandoned live stream
+- Agent HTTP/SSE calls time out instead of hanging a turn forever
+- Chat history messages have the same copy / edit / retry bar as a just-sent turn; edit, retry, quote, and delete resume that conversation first
+- SI Agent reopens the last conversation after quit (messages and unsent composer draft); New Conversation still starts blank
+
+## [1.5.9]
 
 ### UI
 
