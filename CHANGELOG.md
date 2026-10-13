@@ -2,6 +2,33 @@
 
 All notable changes to KnoxStudio will be documented in this file.
 
+## [1.6.1]
+
+### Knox-Studio
+
+#### Fixed
+- Speaker echo stays gated through the room tail so Voice Director does not answer itself; barge-in still uplinks uncorrelated speech
+
+### UI
+
+#### Added
+- Preferences → Recording → Countdown: set any delay from 1–60 seconds, or turn the countdown off so Record starts immediately
+
+#### Changed
+- Preferences, SI Agent Configuration, Export, and other settings dialogs share one chrome: title-case sections, filled cards, cyan accent marks, and a popover surface with a tighter footer
+- Screen-recording countdown is a dimmed ring overlay with Get ready, remaining seconds, and Esc to cancel; the card follows dark and light theme
+- Filenames in the SI Agent panel (`@mentions`, inline chips, chat stream, and history) open the file the same way a Media Library row does: Canvas quick view for audio / video / image, Screenplay for editable text
+- Light theme chrome uses mint/cyan washes; brand cyan is for text, borders, and small CTAs instead of dark-green fills
+- Dark theme follows One Dark Pro surfaces (foreground, menus, selections, and hover)
+- SI Agent composer, generation cards, and chat chrome are tighter (smaller padding, radii, and shadows); user bubbles stay tinted in dark theme
+- SI Agent header and history icons tint on hover instead of sitting in boxed tiles
+- Composer voice, auto-approve, and send hover match the mode dock (teal fill and white glyph in both themes)
+
+#### Fixed
+- Composer `@mention` highlights follow dark/light theme when it changes, instead of keeping the wash from when they were typed
+- Sidebar and timeline splitters stay under the pointer when dropped instead of jumping to a lagged layout sample
+- Live voice user transcripts land before the streaming assistant reply instead of after it
+
 ## [1.6.0]
 
 ### Knox-Studio
@@ -248,7 +275,7 @@ All notable changes to KnoxStudio will be documented in this file.
 ### Changed
 
 - Production KnoxStudio API origin is now `https://api.knoxstudio.ai` (was `api.knox.chat`) across Manager, Editor, Image, Vision, Video, and Voice models, OAuth authorize / token / userinfo / mint / revoke, the LLM client, the realtime WebSocket origin, and continuity vision. Existing configs with a stale `api.knox.chat` endpoint are rewritten on load
-- AI Agent Configuration opens on the **Defaults** tab, which is now the first sidebar item
+- SI Agent Configuration opens on the **Defaults** tab, which is now the first sidebar item
 - Canvas quick view follows the active dark/light UI theme instead of always painting a cinema-black backdrop and plate
 - Media Library file tree no longer draws a folder icon per row — only file-type glyphs remain
 - Removed the vendored `egui/` tree
@@ -314,7 +341,7 @@ Cmd/Shift clip selection no longer depends on finding a sliver of empty track: a
 
 ### App
 
-- One graceful-shutdown path on Quit, window close, unsaved Discard / Save → Quit, and update-install: cancel export, stop voice / AI, finalize recording, persist layout, checkpoint media DB, clean export temps
+- One graceful-shutdown path on Quit, window close, unsaved Discard / Save → Quit, and update-install: cancel export, stop voice / SI, finalize recording, persist layout, checkpoint media DB, clean export temps
 - Session error log with copy, clear, Open Panic Log, and Open Crash Reports
 - Debug console lists crash reports (copy / delete / clear), a memory / health / crash stats strip, and a launch toast for unviewed crashes
 - Preferences: custom 1–120 FPS next to presets
@@ -369,12 +396,12 @@ The composer mic, status meter, and header badge share one clock and the same sm
 - Mic orb fill, glyph, and ripple rings follow session state and live loudness instead of a static teal/red circle
 - Status row adds a 15-bar meter beside the hint; live captions stay body-coloured because the meter already carries the state
 - Header Voice Director badge tints to the same accent and glyph as the composer orb, including the device-picker speaker
-- Mic RMS is attack/release-smoothed and noise-gated; assistant playback envelope is exposed so AI speech drives the indicator instead of leftover speaker bleed into the mic
+- Mic RMS is attack/release-smoothed and noise-gated; assistant playback envelope is exposed so SI speech drives the indicator instead of leftover speaker bleed into the mic
 - Voice chrome only schedules frames while something is moving (speech, thinking, connecting, or a loud ready-state room). A quiet Connected session stays off the animation loop; reduced motion draws a static snapshot
 
 ## [1.5.0]
 
-KnoxStudio now runs on **GPUI + gpui-kit** instead of egui/eframe. The NLE, capture, export, and AI domain stay the same; the window runtime is a retained-mode Mac app.
+KnoxStudio now runs on **GPUI + gpui-kit** instead of egui/eframe. The NLE, capture, export, and SI domain stay the same; the window runtime is a retained-mode Mac app.
 
 ### Runtime
 
@@ -387,7 +414,7 @@ KnoxStudio now runs on **GPUI + gpui-kit** instead of egui/eframe. The NLE, capt
 - Screenplay editor on the kit rope `Editor`: Tree-sitter highlighting, line numbers, soft wrap, find/replace, outline, and git
 - Agent composer is a real textarea with @ mentions, decorations, and streaming markdown — not a per-frame egui text edit
 - In-app FPS HUD (`gpui-fps`) from GPUI frame timings: FPS, frame time, P95, drop rate, CPU / GPU / memory
-- Dedicated tokio runtime so AI, export, and IO never block the UI thread
+- Dedicated tokio runtime so SI, export, and IO never block the UI thread
 - Bundle FFmpeg/FFprobe 9.0.1
 
 ### What this unlocks
@@ -555,7 +582,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Connected account shows `@username`; Sign out revokes the key on the server when the network is available
 - **Advanced** still accepts a pasted `sk-` key, including keys saved before this change
 - Cancel after mint could leak a key & Advanced paste left a stale OAuth session
-- Shape AI models config modal bars fill the same horizontal bounds
+- Shape SI models config modal bars fill the same horizontal bounds
 
 ## [1.3.9]
 
@@ -611,7 +638,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Composer shows Listening / Thinking / Speaking, a live mic-level ring on the voice button, and a pulse while connecting
 - Header title switches to **Voice Director** for the whole session, including while connecting; click the mic to start or stop
 
-### AI Agent chat — typesetting & density
+### SI Agent chat — typesetting & density
 
 - Switching dark and light no longer shreds agent reply text — markdown no longer reuses glyph meshes after the font atlas is rebuilt
 - Contractions from voice and LLM replies no longer render as `I' m` / `I' ll` — typographic apostrophes and quotes typeset with Latin metrics
@@ -644,7 +671,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 
 ## [1.3.7]
 
-### AI Agent chat — reliability & streaming
+### SI Agent chat — reliability & streaming
 
 - Fix duplicated and overlapping agent replies after video generation — each turn now shows one assistant message that updates in place
 - Remove the separate “Thinking…” placeholder bubble; responses stream live into a single message
@@ -654,7 +681,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Starting a new chat or switching conversations no longer lets a late reply appear in the wrong thread
 - Chat history no longer shows the same reply twice after a video job
 
-### AI Agent chat — reading experience
+### SI Agent chat — reading experience
 
 - Markdown wraps properly — long URLs, job IDs, hashes, and mixed Chinese/English text no longer stack one character per line
 - Bulleted and numbered lists read cleanly with proper indentation
@@ -664,7 +691,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Inline math (`$…$`, `$$…$$`) renders in the message; LaTeX and Mermaid blocks appear as copyable code
 - Message text remains selectable for copy-paste
 
-### AI Agent chat — streaming feel
+### SI Agent chat — streaming feel
 
 - Smoother token streaming with less flicker and layout jumping while the agent is typing
 - Blinking cursor at the end of the in-flight reply instead of a separate “Streaming…” bubble
@@ -673,15 +700,15 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Loading dots inside the message when the first tokens are slow to arrive
 - Stream errors show a clear message with **Retry** instead of raw error text in the reply
 
-### AI Agent chat — reasoning
+### SI Agent chat — reasoning
 
 - One collapsible **Reasoning** section per message — no duplicate thinking boxes
 - While reasoning: section expands automatically; when done, collapses with a summary like “Thought for 4s”
 - Completed messages show reasoning collapsed by default; expand/collapse is remembered per message
 - **Copy reasoning** available from the message actions menu; default copy copies the answer only
-- Reasoning effort setting (Off / Low / Medium / High) in AI Agent configuration; hidden for models that do not support it
+- Reasoning effort setting (Off / Low / Medium / High) in SI Agent configuration; hidden for models that do not support it
 
-### AI Agent chat — messages & actions
+### SI Agent chat — messages & actions
 
 - Cleaner message layout: less repeated chrome, more room for content; refreshed light and dark styling
 - Hover actions on each message: **Copy**, **Retry** (agent), **Edit** (user), and **More** (copy as Markdown, delete, quote, and more)
@@ -691,7 +718,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Chat history uses the same layout and timestamp rules as live chat — no timestamp on every line
 - Related notices and tool cards group visually; stopped or failed turns show a clear banner
 
-### AI Agent chat — composer
+### SI Agent chat — composer
 
 - Composer grows as you type (taller draft area for long prompts)
 - Choose **Enter to send** or **Cmd+Enter to send** in preferences; Shift+Enter always adds a new line
@@ -701,7 +728,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Quick-start prompts (generate video, edit last clip, explain selection, write a shot list, and more) insert into the composer without sending immediately
 - Composer stays above floating buttons and mention popups; focus returns after send or stop
 
-### AI Agent chat — video, audio & tools
+### SI Agent chat — video, audio & tools
 
 - Video generation shown as one card per job: prompt, progress, elapsed time, and errors in a single place
 - When complete: **Play**, **Reveal in timeline**, **Copy prompt**, and **Retry** on the card; timeline placement shown on the card, not as a second reply
@@ -710,7 +737,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Plan, confirm, and question cards improved — live step updates, approval-style confirms, keyboard 1–9 for quick answers
 - Compact tool-call rows in the thread (expand for details), similar to Cursor-style tool cards
 
-### AI Agent chat — history & search
+### SI Agent chat — history & search
 
 - History view matches live chat — same bubbles, actions, and styling
 - Resuming a conversation restores generation card state and reasoning layout
@@ -719,14 +746,14 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Delete a single message or an entire turn (user + agent) with confirmation
 - Conversation titles no longer pick up “Thinking…” from old sessions
 
-### AI Agent chat — performance & polish
+### SI Agent chat — performance & polish
 
 - Long conversations scroll smoothly with a virtualized message list
 - Suggested follow-up chips after a completed reply (e.g. make it shorter, generate a video, continue)
 - **Quote** inserts a blockquote into the composer from any message
 - Open a message in a larger overlay for wide tables or long code
 - Header shows the active model and Auto vs Confirm mode; optional token usage when the API provides it
-- Network and quota errors as clear notices with **Retry** and a link to AI settings
+- Network and quota errors as clear notices with **Retry** and a link to SI settings
 - **Jump to bottom** button with unread count when you have scrolled up
 - Select multiple messages (checkbox or ⌘⇧A) to copy, export, or delete in bulk
 - Pin an important message or generation card to the top of the panel
@@ -752,11 +779,11 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 
 ## [1.3.4]
 
-- Remember AI Agent vs Inspector panel selection across app launches (including open/closed state)
-- Expand AI Agent Reasoning section by default (users can still collapse it manually)
-- Simplify AI Agent Configuration for Manager and Editor models: KnoxChat (`api.knox.chat`) is the only provider, with Provider and Endpoint fields hidden
+- Remember SI Agent vs Inspector panel selection across app launches (including open/closed state)
+- Expand SI Agent Reasoning section by default (users can still collapse it manually)
+- Simplify SI Agent Configuration for Manager and Editor models: KnoxChat (`api.knox.chat`) is the only provider, with Provider and Endpoint fields hidden
 - Move the shared KnoxChat API key to the Defaults tab for Manager and Editor models
-- Drive KnoxChat Manager, Editor, Sub-Models, Director, Vision, and title generation from the live [`List Available Models`](https://docs.knox.chat/1.0.0/list-available-models) catalog (`GET /v1/models`): `context_length`, `max_completion_tokens`, `supported_parameters`, and architecture modalities
+- Drive KnoxChat Manager, Editor, Sub-Models, Director, Vision, and title generation from the live [`List Available Models`](https://docs.knoxstudio.ai/1.0.0/list-available-models) catalog (`GET /v1/models`): `context_length`, `max_completion_tokens`, `supported_parameters`, and architecture modalities
 - Apply catalog `max_completion_tokens` as the default Manager/Editor completion limit (no static 256/8192 ceiling), clamp user overrides to that cap, and reload agents when the catalog finishes loading
 - Gate tools, temperature, and Claude extended thinking from each model's `supported_parameters`; auto-detect text / image / vision roles from `input_modalities` / `output_modalities`
 - Add a gear (Parameters / Advanced) panel on Manager and Editor models for Max Tokens, Temperature, Top P/K, penalties, Min P, and Seed — only showing controls listed in `supported_parameters`, with limits from the catalog
@@ -789,13 +816,13 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 
 ## [1.3.0]
 
-### Editor mode — AI timeline editor
+### Editor mode — SI timeline editor
 
 - Editor agent is now a full timeline editor that can do everything a human can on the tracks: split, trim, move, delete, retime, opacity/volume/fade/transform, add/remove transitions, duplicate, copy/cut/paste, detach audio, freeze frames, lock/unlock, group/ungroup, ripple-delete a range, and insert space.
 - Move the red playhead/scrubber, select clips, and manage tracks (add, remove, rename, mute/solo/lock/volume) directly from chat.
 - Frame extraction from real footage: extract a frame (playhead/first/last/specific time) or auto-detect key frames and drop them on the timeline as stills.
 - Insert media from a file path, an `@`-mentioned attachment, or the Media Library.
-- AI generation from the timeline: `regenerate_clip`, `generate_variation` (opens the variations panel), and `extend_clip` queue async generations grounded in the source clip.
+- SI generation from the timeline: `regenerate_clip`, `generate_variation` (opens the variations panel), and `extend_clip` queue async generations grounded in the source clip.
 - Vision-grounded edits: the agent can watch the actual footage (by clip, time, or playhead) before deciding where to cut/trim.
 - Selection-aware: the agent now sees what you have selected, so "slow this down", "delete this", or "caption the selected clip" resolves to the right clips.
 - Richer timeline awareness: the snapshot now shows canvas resolution, per-clip lock/group/audio/transition/transform state, per-track gaps, and markers — so edits like removing a transition or closing a gap are grounded, not guessed.
@@ -821,7 +848,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - LLMs supporting for Screenplay editor
 - Git supporting for Screenplay editor
 - Remove unused accessibilities
-- Director mode: AI director shot breakdown with framing, camera, and per-shot timing
+- Director mode: SI director shot breakdown with framing, camera, and per-shot timing
 - Director mode: Interactive Shot List editor to review and edit prompts and durations before generation
 - Director mode: Send screenplay directly from the Screenplay editor toolbar
 - Director mode: Syllable-accurate duration enforcement with auto-split for overlong dialogue
@@ -903,7 +930,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Quick jump from a completed shot to its clip on the timeline
 
 #### Settings & Notifications
-- Continuity toggles in AI Agent Config → Defaults (frame chaining, sequential mode, vision analysis, environment sync, motion prompts)
+- Continuity toggles in SI Agent Config → Defaults (frame chaining, sequential mode, vision analysis, environment sync, motion prompts)
 - macOS desktop notifications when sequences complete or fail, with preference toggle
 - Escape shortcut to close sequence view popovers
 
@@ -925,14 +952,14 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 
 ### Added
 
-#### AI & Generation
+#### SI & Generation
 - Manager Agent with streaming responses and tool calling
 - Voice agent support via GPT-4o Realtime API
 - Multi-provider video generation (Minimax, Luma, Kling, Veo)
 - Character role system with reference images
 - Screenplay editor with scene-driven generation
 - Generation history with variations support
-- Cost tracking dashboard for AI usage
+- Cost tracking dashboard for SI usage
 
 #### Data Integrity (Phase 7)
 - Project file backup rotation (keeps last 5 autosave snapshots)
@@ -955,7 +982,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 #### Observability (Phase 4)
 - Crash reporting with local storage
 - Export performance metrics (FPS, ETA)
-- AI generation cost tracking
+- SI generation cost tracking
 - Health check system (ffmpeg, disk, memory)
 - Session analytics (opt-in)
 - Runtime log level toggle
@@ -983,7 +1010,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 
 #### Testing (Phase 2)
 - Export pipeline integration tests
-- AI agent tool dispatch tests
+- SI agent tool dispatch tests
 - Fuzz testing for project file deserialization
 - Property-based tests for timeline operations
 - Rate limiter edge case tests
@@ -1055,7 +1082,7 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 - Rust + Swift FFI architecture
 - AVFoundation video playback
 - SQLite for media indexing
-- Tokio async runtime for AI
+- Tokio async runtime for SI
 
 ---
 
@@ -1063,5 +1090,5 @@ Capture, timeline editing, Inspector, Voice Director, generation, export, OAuth,
 
 | Version | Date | Highlights |
 |---------|------|------------|
-| 1.1.0 | 2026-05-23 | AI agents, data integrity, i18n |
+| 1.1.0 | 2026-05-23 | SI agents, data integrity, i18n |
 | 1.0.0 | 2026-03-15 | Initial release |
