@@ -2,6 +2,28 @@
 
 All notable changes to KnoxStudio will be documented in this file.
 
+## [Unreleased]
+
+## [1.7.0]
+
+### UI
+
+#### Added
+- Circular Voice Director HUD: a frameless glass orb that floats on the desktop. The circle button next to the composer mic opens it and minimizes the editor; hang-up restores the editor, Return to editor keeps the call in the in-panel Voice Director
+- Companion Voice Director conversation window beside the HUD (same header, thread, and composer). Closing it or Escape in that window keeps talking; HUD Escape closes a peek, then the chat, then hangs up
+- HUD wells: Roles, Screenplay, Director, pause, Storyboard, Writer, and Editor on the lower arc; headphones, conversation, Return to editor, and hang-up on the upper arc
+- Live caption chip on the orb (muted dots idle, bounce while thinking, truncated caption while speaking); click opens the companion chat
+- Spoken show/toggle of the timeline, Explorer, or Inspector while the HUD is open raises a session-only peek (layout prefs unchanged); hide or Escape dismisses it
+
+#### Changed
+- Left sidebar is named Explorer instead of Media Library — it holds screenplays, markdown, JSON, YAML, and media, and Screenplay opens from the same tree
+- KnoxStudio is positioned as a general SI studio (video, image, audio, documents, realtime voice) rather than a video-only editor — empty state, About, and composer copy match that breadth
+- Composer send matches the voice well; header and composer chrome share the HUD glass (navy disc, metal rim, brand accents)
+- HUD orb is sized to the glass and orbitals, masked to a circle, with the macOS window shadow off so it sits on the desktop without a square card
+
+#### Removed
+- Advanced paste-an-API-key in SI Agent Configuration — Sign in with KnoxStudio is the only way to connect
+
 ## [1.6.1]
 
 ### Knox-Studio
