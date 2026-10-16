@@ -4,6 +4,23 @@ All notable changes to KnoxStudio will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.1]
+
+### UI
+
+#### Added
+- Explorer, Inspector, Timeline, Canvas, and Screenplay open as independent Voice Director HUD windows while the orb is up — they stay open together and tile like the docked editor instead of cascading over the circle
+- Companion HUD windows bind the same NLE shortcuts and menus as the editor (playback, clip edit, ⌘1–⌘4, Preferences, Export), so Timeline / Canvas / Inspector / Screenplay keep working while the editor is minimized
+- Spoken show/toggle of conversation opens or closes the Voice Director chat window the same way as Explorer and the other companions; closing chat keeps talking
+
+#### Changed
+- Voice HUD follows light and dark theme: night stays navy glass and ice mint; daylight is porcelain, platinum bezel, and engraved ink so wells still read on the light disc
+- Headphones and Return to editor sit on the hexagonal plate at 10 and 2 o'clock (same ring as hang-up and pause); Explorer, Timeline, Inspector, and Canvas pack beside chat on the inner ring
+
+#### Fixed
+- Showing chat or another companion no longer applies a leftover theme or language from a chrome snapshot — appearance changes only when you ask
+- HUD panels pick up a theme toggle immediately instead of keeping the previous paint
+
 ## [1.7.0]
 
 ### UI
