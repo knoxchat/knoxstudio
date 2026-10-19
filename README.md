@@ -8,7 +8,10 @@ Whether you're teaching a course, shipping a product demo, telling a story, or p
 
 **Capture it. Shape it. Bring it to life with AI. Then share it with the world.**
 
-https://github.com/user-attachments/assets/ee4ec189-b26e-4703-89d9-46e59a86d6c1
+
+https://github.com/user-attachments/assets/fa37c7a9-c707-46ee-853d-538db65ce7b6
+
+
 
 ## Why KnoxStudio?
 
