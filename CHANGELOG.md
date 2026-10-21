@@ -4,6 +4,42 @@ All notable changes to KnoxStudio will be documented in this file.
 
 ## [Unreleased]
 
+### Knox-Studio
+
+#### Changed
+- A GitHub Release is now a forced update: the app checks on every launch and about every hour, downloads the signed DMG as soon as it sees a newer version, then restarts to install. Skip Version is gone. Recording or export finishes first; unsaved work still asks to save.
+
+## [1.7.2] - 2026-10-21
+
+voice library and collections, Voice Changer voice selection
+
+### Knox-Studio
+
+#### Added
+- Voice Library picker in Character Roles: browse My voices, the shared Library, and Collections, search them, and pick a `voice_id` without pasting an id by hand
+- Voice collections: the `voices` tool gained `list_collections`, `create_collection`, `get_collection`, `update_collection`, `delete_collection`, `add_to_collection`, and `remove_from_collection`
+- `GET` / `PUT /v1/knox-studio/selected-voice`, so the account's selected voice follows you across devices
+- Voice Changer uses the selected voice when a request does not name one, instead of always falling back to a hardcoded id
+
+#### Changed
+- The default public TTS voice is Jarnathan (`c6SfcYrb2t09NHXiT80T`) instead of Rachel; a saved Voices-tab pick wins over it, a named role voice still wins over both
+- TTS and Voice Changer resolve the voice in one order: explicit `voice_id`, then role voice, then the selected voice, then the public default (Rachel's id still works for older projects)
+- `voices` tool docs now point at list/shared before TTS or Voice Changer rather than naming Rachel everywhere
+
+### UI
+
+#### Added
+- Dialog entrances: `Dialog::entrance` / `AlertDialog::entrance` take `SlideDown` (the previous entrance), `Fade`, `FadeSlide`, or `None`, and reduced motion shows the final state instead of animating
+- `AlertDialog::margin_top` to seat an alert lower than the default tenth-of-the-window offset
+- Application-wide tooltip timing through `TooltipDefaults` (show delay and grace period), plus `Button::tooltip_show_delay` for a single trigger
+- `ShowCompletions` action and `show_completions` on the editor input, so a menu can be raised at the caret without typing
+- `add_selection` for a programmatic extra cursor in a textarea
+- `RoundedFrameCover`, keeping a rounded scroll viewport's corners clean at every scroll offset
+
+#### Fixed
+- Completion overlays no longer land after further edits or a lost focus — a stale response from an older document revision is dropped
+- Auto-grow textareas re-measure when the row count changes instead of keeping the first measurement
+
 ## [1.7.1]
 
 ### UI
