@@ -4,10 +4,31 @@ All notable changes to KnoxStudio will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.3] - 2026-10-23
+
+screenplay Read / Edit / export, One Dark Pro markdown highlighting
+
 ### Knox-Studio
 
 #### Changed
 - A GitHub Release is now a forced update: the app checks on every launch and about every hour, downloads the signed DMG as soon as it sees a newer version, then restarts to install. Skip Version is gone. Recording or export finishes first; unsaved work still asks to save.
+
+### UI
+
+#### Added
+- Screenplay Read paints prose through kit `TextView` markdown, so headings, bold, quotes, and word spacing match the rest of the app
+- Dialect-aware parse for Knox `[NAME]`, Fountain sluglines, and literary `**NAME**` / `>` speech, shared with Outline, characters, Director, find, and export
+- Export picker for HTML, Final Draft (FDX), and a Knox-normalized Markdown copy; print preview on `⌘P`
+- Character, relationship, and comment panels; dialect-aware completions and click-to-insert at the caret
+
+#### Changed
+- Edit mode markdown uses the kit tree-sitter highlighter and One Dark Pro token colors (headings, emphasis, code, links, lists), with a thin overlay for `[CHAR]`, Fountain cues, and transitions
+- Read scene cards follow Fountain sluglines as well as `##` headings; the title page is centered
+- Scene starts emit `Heading` blocks; find / goto / prev-next use the file's dialect; Export FDX is listed on the shortcuts overlay
+
+#### Fixed
+- Edit markdown no longer leaves everything but `#` titles uncolored
+- Literary and Fountain scripts no longer flatten when scenes are reordered
 
 ## [1.7.2] - 2026-10-21
 
