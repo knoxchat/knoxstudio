@@ -4,6 +4,55 @@ All notable changes to KnoxStudio will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.5] - 2026-11-03
+
+transport playhead and zoom, SFX v3, history counts
+
+### Knox-Studio
+
+#### Changed
+- Sound Effects now use `eleven_text_to_sound_v3` instead of the deprecated `eleven_text_to_sound_v2` (migration deadline February 1, 2027)
+- History search looks through generation-card metadata (job ids) and ranks title matches ahead of body-only hits
+
+#### Fixed
+- History list message counts follow the stored thread (including generation cards) instead of staying at 0
+
+### UI
+
+#### Changed
+- Playhead timecode and the timeline zoom-out / slider / zoom-in group sit in the transport bar, not on the timeline toolbar
+
+#### Fixed
+- Opening Timeline, Explorer, Inspector, Canvas, or Screenplay as a Voice Director HUD no longer crashes after the transport move. Pop-out stays on the main editor so a detached HUD does not show it again
+- Export progress title switches to Export Complete or Export Failed instead of staying on Exporting...
+
+## [1.7.4] - 2026-10-29
+
+screen recording polish, Voice Director mentions
+
+### Knox-Studio
+
+#### Added
+- After a screen recording, KnoxStudio can auto-zoom on groups of clicks instead of punching in on every click. Nearby zooms hold and pan between them
+- Webcam bubble you can move, resize, mirror, crop, or have shrink when the screen zooms in. A small preview floats on screen while you record
+- The Editor agent can add zooms, restyle the cursor, and set the frame from chat
+- Voice Director remembers @ mentions and generated media the same way text chat does, so a follow-up stays on that item
+- If a recording is interrupted, mouse motion and clicks are restored with the take
+
+#### Changed
+- Drawing a zoom on the canvas (`Z`) creates an editable zoom region you can move and trim, instead of a one-off punch-in
+- Asking for music from a prompt no longer tries to score an attached video
+
+### UI
+
+#### Added
+- Inspector sections for Frame, Zoom, Cursor, and Webcam
+- Zoom regions on the timeline you can drag, trim, or delete. `⌥⇧Z` adds one at the playhead. Suggest zooms fills in click groups without removing ones you placed by hand
+- Preferences → Recording: auto-zoom new recordings, default webcam size and mirror, and the two cursor options
+
+#### Changed
+- Inspector Video starts with Frame, Zoom, Cursor, and Webcam. Auto-zoom on click is gone — use Suggest zooms or the Recording preference
+
 ## [1.7.3] - 2026-10-23
 
 screenplay Read / Edit / export, One Dark Pro markdown highlighting
