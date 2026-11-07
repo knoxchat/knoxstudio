@@ -4,6 +4,57 @@ All notable changes to KnoxStudio will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.6] - 2026-11-07
+
+voice that feels instant, chat redesign, Keychain API key
+
+### Knox-Studio
+
+#### Added
+- Untitled projects autosave and are offered for recovery after a crash or force quit
+- Preferences → Project → Autosave sets the snapshot interval (15 seconds to 10 minutes)
+- Opening a project that another KnoxStudio is editing warns first, with an Open Anyway option
+- Library and Writer file writes can be undone from the Explorer
+- Preferences → Voice Director → Hold to talk: hold Space in the voice HUD to speak, release to send
+- Short voice commands ("pause", "undo", "split here", "zoom in", "mute track 2", and their Chinese forms) run instantly without waiting for the assistant; turn off under Preferences → Voice Director → Instant commands
+- The voice device menu shows audio diagnostics during a call: speaker buffer, dropped audio, and playback underruns
+- When voice lists several matches, you can answer "the second one", "the last one", 第二个, or 最后一个 to pick one
+- Voice understands Chinese references like 这个, 那个片段, 这张图, and 刚生成的, and finds clips by time ("the clip at 1:20", 1分20秒的片段)
+
+#### Changed
+- The Knox account API key now lives in the macOS Keychain instead of `~/.knoxmedia/config.yaml`; existing keys move over on first launch
+- A settings file that can't be read is kept as `<name>.corrupt-<time>` and reported, instead of being silently replaced with defaults
+- Undo and Redo name the step they act on ("Undo Ripple Delete"), and each voice or agent action is one undo step
+- Voice no longer guesses paid or destructive tools when the tool name is missing
+- Deleting several clips, removing tracks, or running paid tools from voice or chat asks for confirmation first (always in Confirm mode)
+- Stop keeps the agent's conversation instead of wiping it
+- Agent thread previews and the Inspector no longer run ffprobe while drawing
+- Voice renews an expired knoxstudio.ai sign-in silently and only asks you to sign in if that fails; rate limits and out-of-credit errors show a clear notice instead of reconnecting
+- Voice no longer starts a second reply while one is still playing, and stops talking over you after you interrupt
+- After a dropped connection, voice picks up the conversation where it left off
+- Muting voice discards audio already sent, so it can't answer what you said before muting
+- Voice checks microphone access before connecting: it asks the first time, and if access is off it stops with an Open System Settings button instead of sitting silently on Ready
+- If the microphone sends only silence for a few seconds, voice says "We can't hear your microphone" and offers a microphone picker; a microphone that fails to start says so in the thread
+- Connecting or unplugging AirPods, headphones, or a microphone mid-call switches voice to the new device without dropping the call, and a toast says "Switched to AirPods Pro"
+- Headphone mode now follows the output device: AirPods, Bluetooth, and wired headphones turn it on, speakers and displays turn it off. Preferences → Voice Director → Headphones and the HUD device menu offer Automatic, Headphones, or Speakers
+- Timeline playback on the speakers no longer starts voice turns: the mic ignores audio that matches what the timeline is playing, while you can still talk over it. Headphones and Hold to talk are unaffected
+- Voice replies start sooner on speakers: the speaker buffer starts at 150 ms instead of 400 ms and grows only if a reply stutters. Slow replies no longer drop in pitch
+- Mic audio and large voice messages no longer wait on each other, and the voice audio threads no longer allocate or lock while running
+- Interrupting voice tells the model exactly how much of the reply you heard, including when a reply after a tool call was still playing behind the first one, so it doesn't think it said the unheard part
+- Interrupting voice while it is still thinking keeps that reply from starting to play afterwards, and the HUD stays on Listening while you talk
+- Holding the talk key while a reply is thinking or still finishing on the speakers cancels it, not only while the HUD says Speaking
+
+#### Fixed
+- Talking over voice on speakers works again: the echo check compares the last 64 ms of mic against what played and learns how loud the speakers are in the mic, so your voice is no longer mistaken for echo while the assistant's own audio still never starts a turn
+- Preview color grades occasionally not applying when two clips were graded at the same time
+- Updated rustls, rustls-webpki and h2 to fix security advisories
+
+### UI
+
+#### Changed
+- Redesigned the agent chat thread
+- Redesigned the chat history panel
+
 ## [1.7.5] - 2026-11-03
 
 transport playhead and zoom, SFX v3, history counts
