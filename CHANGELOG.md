@@ -4,6 +4,38 @@ All notable changes to KnoxStudio will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.7] - 2026-11-18
+
+Components, theme-aware timeline, UI polish
+
+### Knox-Studio
+
+#### Changed
+- Timeline clips follow the current dark or light theme instead of a fixed dark plate
+- Inlined components while keeping Knox patches
+
+### UI
+
+#### Added
+- Selected inspector tools, chips, screenplay modes, the loop button, shot choices, and curves channels fill with the highlight color so the current choice is easier to see
+- Resting on a link in agent replies, What's New, or screenplay Read shows where it goes
+- Tables in formatted text highlight the row under the pointer
+- Window corners follow the roundness of the current theme
+- Right-to-left layout when the system language is Arabic, Hebrew, Persian, or Urdu
+- Checkboxes can show a mixed state when only some items in a group are selected
+
+#### Changed
+- You can tab to sliders and move them with the keyboard
+- VoiceOver names dialogs, checked menu items, and table rows
+- Typing in text fields moves and deletes by character cluster, so emoji and accented letters stay together
+- Tab into a tab bar lands on the selected tab, then arrows move between tabs
+- Copy buttons have a VoiceOver name even when they show only an icon
+- Long tooltips wrap instead of overflowing the background
+- Formatted text folds extra spaces like HTML, keeps several images on one line, and numbers lists correctly after a nested list
+
+#### Fixed
+- A drag ends if the window compositor swallows the mouse-up, instead of leaving a stuck gesture
+
 ## [1.7.6] - 2026-11-07
 
 voice that feels instant, chat redesign, Keychain API key
